@@ -1,13 +1,21 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include  # <-- IMPORT 'include'
 
 from . import views
 
 urlpatterns = [
+    # Main Index View (from oc_lettings_site/views.py)
     path('', views.index, name='index'),
-    path('lettings/', views.lettings_index, name='lettings_index'),
-    path('lettings/<int:letting_id>/', views.letting, name='letting'),
-    path('profiles/', views.profiles_index, name='profiles_index'),
-    path('profiles/<str:username>/', views.profile, name='profile'),
+
+    # Lettings App URLs (using include for modularity)
+    path('lettings/', include('lettings.urls')), 
+
+    # Profiles App URLs (using include for modularity)
+    path('profiles/', include('profiles.urls')),
+    
+    # Admin
     path('admin/', admin.site.urls),
 ]
+
+# Note: The original paths for lettings_index, letting, profiles_index, and profile
+# have been REMOVED from this file.
