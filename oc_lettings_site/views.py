@@ -3,7 +3,7 @@ Root view functions for the main project site, including the homepage
 and custom handlers for 404 and 500 errors.
 """
 from django.shortcuts import render
-
+import sentry_sdk
 
 def index(request):
     """
@@ -46,4 +46,13 @@ def custom_500_view(request):
 # def index(request):
 #     # Intentional error to force a 500 status
 #     raise Exception("Intentional Server Crash for 500 Test") 
+#     return render(request, 'index.html')
+
+
+# def index(request):
+#     """
+#     Renders the main index (homepage) of the application.
+#     """
+#     sentry_sdk.capture_message("SENTRY_DIRECT_TEST: This message should always appear as a new Issue.", 'fatal')
+    
 #     return render(request, 'index.html')
