@@ -47,13 +47,18 @@ class ProfileURLTest(TestCase):
         cls.profile = Profile.objects.create(user=cls.user)
 
     def test_index_url_resolves(self):
-        """Tests that the '/profiles/' URL resolves to the correct view function ('profiles:index')."""
+        """
+        Tests that the '/profiles/' URL resolves to the correct view function ('profiles:index').
+        """
         url = reverse('profiles:index')
         # Check if the URL resolves to the view function named 'index'
         self.assertEqual(resolve(url).func.__name__, 'index')
 
     def test_profile_detail_url_resolves(self):
-        """Tests that the '/profiles/<username>/' URL resolves to the correct view function ('profiles:profile')."""
+        """
+        Tests that the '/profiles/<username>/'
+        URL resolves to the correct view function ('profiles:profile').
+        """
         url = reverse('profiles:profile', args=[self.user.username])
         # Check if the URL resolves to the view function named 'profile'
         self.assertEqual(resolve(url).func.__name__, 'profile')
@@ -78,7 +83,10 @@ class ProfileViewTest(TestCase):
         self.assertTemplateUsed(response, 'profiles/index.html')
 
     def test_index_view_content(self):
-        """Tests that the index view context contains all profiles and their usernames are in the response."""
+        """
+        Tests that the index view context contains all
+        profiles and their usernames are in the response.
+        """
         response = self.client.get(reverse('profiles:index'))
         # Check if both profiles are in the context list
         self.assertIn(self.profile_a, response.context['profiles_list'])
