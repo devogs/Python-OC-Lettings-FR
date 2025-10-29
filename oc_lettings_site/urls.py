@@ -1,7 +1,7 @@
 """
 The root URL configuration for the oc_lettings_site project.
 
-Delegates URL patterns to the 'lettings' and 'profiles' applications. 
+Delegates URL patterns to the 'lettings' and 'profiles' applications.
 Also defines the custom handlers for 404 and 500 errors.
 """
 from django.contrib import admin

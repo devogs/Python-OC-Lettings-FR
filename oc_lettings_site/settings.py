@@ -22,7 +22,7 @@ if SENTRY_DSN:
             DjangoIntegration(),
             sentry_logging,
         ],
-        traces_sample_rate=1.0, 
+        traces_sample_rate=1.0,
         release=os.environ.get('GIT_COMMIT_SHA', '1.0.0'),
         send_default_pii=False
     )
