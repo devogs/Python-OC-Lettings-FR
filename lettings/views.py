@@ -1,5 +1,6 @@
 """
-View functions for the 'lettings' application, handling the listing and detail pages for rental properties.
+View functions for the 'lettings' application,
+handling the listing and detail pages for rental properties.
 """
 import logging
 
@@ -31,7 +32,7 @@ def index(request):
     except Exception as e:
         # Log a critical error if database access fails. This will be sent to Sentry.
         logger.error(f"Critical error retrieving lettings list from DB: {e}", exc_info=True)
-        raise 
+        raise
 
     context = {'lettings_list': lettings_list}
     return render(request, 'lettings/index.html', context)
@@ -55,17 +56,15 @@ def letting(request, letting_id):
     logger.info(f"Accessing detail view for letting ID: {letting_id}")
 
     try:
-        # get_object_or_404 handles the common DoesNotExist exception, but we wrap it 
+        # get_object_or_404 handles the common DoesNotExist exception, but we wrap it
         # to log database-related warnings or other critical errors.
         letting = get_object_or_404(Letting, id=letting_id)
         logger.debug(f"Retrieved letting title: {letting.title}")
-    except Letting.DoesNotExist:
-        # Log a warning when a requested object is not found (this becomes a 404, not a 500)
-        logger.warning(f"Letting with ID {letting_id} does not exist in the database.")
-        raise # Re-raise the exception for Django to process the 404
     except Exception as e:
         # Catch other potential database errors (e.g., connection issue)
-        logger.error(f"Unexpected error accessing letting with ID {letting_id}: {e}", exc_info=True)
+        logger.error(
+            f"Unexpected error accessing letting with ID "
+            f"{letting_id}: {e}", exc_info=True)
         raise
 
     context = {
@@ -73,4 +72,3 @@ def letting(request, letting_id):
         'address': letting.address,
     }
     return render(request, 'lettings/letting.html', context)
-
