@@ -1,10 +1,9 @@
+"""Tests for the main views and error handlers of the oc_lettings_site application."""
 from django.test import TestCase
-# Import reload to force the URLconf to pick up the patched view
 from importlib import reload
 from django.urls import reverse, clear_url_caches
 from django.test.utils import override_settings
 from unittest.mock import patch
-# Import the URLs module to be reloaded
 import oc_lettings_site.urls as root_urlconf
 
 
@@ -41,7 +40,8 @@ class ErrorHandlerTest(TestCase):
     @override_settings(DEBUG=False)
     def test_500_page_loads_and_returns_500_status(self, mock_index):
         """
-        Tests that an internal server error returns a 500 status code and uses the custom 500 template.
+        Tests that an internal server error returns a
+        500 status code and uses the custom 500 template.
         """
         # Clear the URL cache
         clear_url_caches()
@@ -49,7 +49,7 @@ class ErrorHandlerTest(TestCase):
         # Reload the URLconf module to ensure the patched view is used
         reload(root_urlconf)
 
-        # ✅ Prevent Django test client from re-raising exceptions
+        # Prevent Django test client from re-raising exceptions
         self.client.raise_request_exception = False
 
         # Access the index URL, which now crashes and triggers the 500 handler

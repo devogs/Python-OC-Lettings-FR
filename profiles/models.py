@@ -1,5 +1,5 @@
 """
-Models for the 'profiles' application, defining extended user information 
+Models for the 'profiles' application, defining extended user information
 via the Profile model linked to Django's built-in User model.
 """
 from django.db import models

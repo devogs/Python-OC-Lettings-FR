@@ -8,7 +8,6 @@ Covers:
 """
 from django.test import TestCase
 from django.urls import reverse, resolve
-from django.shortcuts import get_object_or_404
 from lettings.models import Address, Letting
 
 
@@ -51,17 +50,27 @@ class LettingURLTest(TestCase):
     def setUpTestData(cls):
         """Create a letting object to ensure the detail view URL is testable."""
         cls.address = Address.objects.create(
-            number=456, street='URL Street', city='URL City', state='UC', zip_code=67890, country_iso_code='UCO'
+            number=456,
+            street='URL Street',
+            city='URL City',
+            state='UC',
+            zip_code=67890,
+            country_iso_code='UCO'
         )
         cls.letting = Letting.objects.create(title='URL Test Letting', address=cls.address)
 
     def test_index_url_resolves(self):
-        """Tests that the '/lettings/' URL resolves to the correct view function ('lettings:index')."""
+        """
+        Tests that the '/lettings/' URL resolves to the correct view function ('lettings:index').
+        """
         url = reverse('lettings:index')
         self.assertEqual(resolve(url).func.__name__, 'index')
 
     def test_letting_detail_url_resolves(self):
-        """Tests that the '/lettings/<id>/' URL resolves to the correct view function ('lettings:letting')."""
+        """
+        Tests that the '/lettings/<id>/'
+        URL resolves to the correct view function ('lettings:letting').
+        """
         url = reverse('lettings:letting', args=[self.letting.id])
         self.assertEqual(resolve(url).func.__name__, 'letting')
 
@@ -73,12 +82,22 @@ class LettingViewTest(TestCase):
     def setUpTestData(cls):
         """Create test data for views: two lettings."""
         cls.address_1 = Address.objects.create(
-            number=1, street='First St', city='A City', state='AC', zip_code=10000, country_iso_code='USA'
+            number=1,
+            street='First St',
+            city='A City',
+            state='AC',
+            zip_code=10000,
+            country_iso_code='USA'
         )
         cls.letting_1 = Letting.objects.create(title='Letting A', address=cls.address_1)
 
         cls.address_2 = Address.objects.create(
-            number=2, street='Second St', city='B City', state='BC', zip_code=20000, country_iso_code='USA'
+            number=2,
+            street='Second St',
+            city='B City',
+            state='BC',
+            zip_code=20000,
+            country_iso_code='USA'
         )
         cls.letting_2 = Letting.objects.create(title='Letting B', address=cls.address_2)
 
@@ -93,7 +112,10 @@ class LettingViewTest(TestCase):
         self.assertTemplateUsed(response, 'lettings/index.html')
 
     def test_index_view_content(self):
-        """Tests that the index view context contains all lettings and their titles are in the response."""
+        """
+        Tests that the index view context contains
+        all lettings and their titles are in the response.
+        """
         response = self.client.get(reverse('lettings:index'))
         # Check if the list contains both lettings
         self.assertIn(self.letting_1, response.context['lettings_list'])
@@ -103,7 +125,10 @@ class LettingViewTest(TestCase):
         self.assertContains(response, 'Letting B')
 
     def test_letting_detail_view_success(self):
-        """Tests that a valid letting detail page returns a 200 status code and uses the correct template."""
+        """
+        Tests that a valid letting detail page returns a 200
+        status code and uses the correct template.
+        """
         response = self.client.get(reverse('lettings:letting', args=[self.letting_1.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'lettings/letting.html')
