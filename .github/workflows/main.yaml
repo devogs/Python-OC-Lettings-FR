@@ -39,5 +39,7 @@ jobs:
           flake8
 
       - name: Run tests
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           pytest
