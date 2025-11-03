@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./oc-lettings-site.sqlite3:/usr/src/app/db.sqlite3
+    command: sh -c "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 oc_lettings_site.wsgi"
