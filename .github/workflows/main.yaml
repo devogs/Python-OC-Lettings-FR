@@ -13,7 +13,7 @@ on:
     types:
       - closed
     branches:
-      - main
+      - master
 
 jobs:
   lint-and-test:
@@ -71,7 +71,7 @@ jobs:
             ${{ env.LATEST_TAG }}
 
   deployment:
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Render Deployment
