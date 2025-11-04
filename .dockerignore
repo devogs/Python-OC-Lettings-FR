@@ -1,0 +1,21 @@
+# .dockerignore
+# Python dependencies
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv
+venv
+env
+
+# Testing
+.pytest_cache
+htmlcov/
+.coverage
+
+# Configuration / Local
+.vscode
+.git
+.gitignore
+.DS_Store

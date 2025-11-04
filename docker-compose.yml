@@ -1,0 +1,8 @@
+services:
+  web:
+    image: matt13290/oc-lettings:latest
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./oc-lettings-site.sqlite3:/usr/src/app/db.sqlite3
