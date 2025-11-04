@@ -8,17 +8,24 @@ on:
       - 'chore/**'
       - 'refactor/**'
       - 'hotfix/**'
-
+      - 'master'
   pull_request:
-    types:
-      - closed
+    types: [closed]
     branches:
-      - master
+      - 'master'
 
 jobs:
+  # ========================================
+  # 1. Lint + Test — runs on feature branches
+  # ========================================
   lint-and-test:
-    if: startsWith(github.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/bug/') || startsWith(github.ref, 'refs/heads/chore/') || startsWith(github.ref, 'refs/heads/refactor/') || startsWith(github.ref, 'refs/heads/hotfix/')
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/feat/') ||
+        startsWith(github.ref, 'refs/heads/bug/') ||
+        startsWith(github.ref, 'refs/heads/chore/') ||
+        startsWith(github.ref, 'refs/heads/refactor/') ||
+        startsWith(github.ref, 'refs/heads/hotfix/')
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -41,10 +48,13 @@ jobs:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: pytest
 
+
+  # ========================================
+  # 2. Build + Push Docker Image — runs only after PR merge to master
+  # ========================================
   build-and-push-docker-image:
-    if: startsWith(github.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/bug/') || startsWith(github.ref, 'refs/heads/chore/') || startsWith(github.ref, 'refs/heads/refactor/') || startsWith(github.ref, 'refs/heads/hotfix/')
     runs-on: ubuntu-latest
-    needs: lint-and-test
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -70,9 +80,15 @@ jobs:
             ${{ env.COMMIT_TAG }}
             ${{ env.LATEST_TAG }}
 
+
+  # ========================================
+  # 3. Deploy to Render — only after successful build & push
+  # ========================================
   deployment:
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
     runs-on: ubuntu-latest
+    needs: build-and-push-docker-image
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+
     steps:
       - name: Trigger Render Deployment
         run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
