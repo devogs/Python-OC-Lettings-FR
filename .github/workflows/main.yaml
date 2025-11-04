@@ -62,3 +62,12 @@ jobs:
           tags: |
             ${{ env.COMMIT_TAG }}
             ${{ env.LATEST_TAG }}
+
+  deployment:
+    runs-on: ubuntu-latest
+    needs: build-and-push-docker-image
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Trigger Render Deployment
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
