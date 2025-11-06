@@ -1,0 +1,203 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage Guide and Use Cases &mdash; Devogs-OC-lettings-FR 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference (Autodoc)" href="api_reference.html" />
+    <link rel="prev" title="Deployment and CI/CD Procedures" href="../deployment/procedures.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Devogs-OC-lettings-FR
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../architecture/project_description.html">Project Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/technologies.html">Technologies and Programming Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/data_models.html">Database Structure and Data Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/prerequisites.html">Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/procedures.html">Deployment and CI/CD Procedures</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage Guide and Use Cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#application-architecture-overview">Application Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-functionalities-end-user-focus">Core Functionalities (End-User Focus)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#error-handling-and-monitoring-administrator-focus">Error Handling and Monitoring (Administrator Focus)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#administration-interface-django-admin">Administration Interface (Django Admin)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference (Autodoc)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Devogs-OC-lettings-FR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Usage Guide and Use Cases</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/usage/guide.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usage-guide-and-use-cases">
+<h1>Usage Guide and Use Cases<a class="headerlink" href="#usage-guide-and-use-cases" title="Link to this heading"></a></h1>
+<p>This section describes the application’s functionality from an end-user and administrator perspective.</p>
+<section id="application-architecture-overview">
+<h2>Application Architecture Overview<a class="headerlink" href="#application-architecture-overview" title="Link to this heading"></a></h2>
+<p>The application’s logic is cleanly separated into two distinct Django applications (modules):</p>
+<ul class="simple">
+<li><p><strong>Lettings:</strong> Manages the property listings (data retrieval and display, using <code class="docutils literal notranslate"><span class="pre">Address</span></code> and <code class="docutils literal notranslate"><span class="pre">Letting</span></code> models).</p></li>
+<li><p><strong>Profiles:</strong> Manages user data and associated profiles (data retrieval and display, using the <code class="docutils literal notranslate"><span class="pre">Profile</span></code> model linked to the default Django <code class="docutils literal notranslate"><span class="pre">User</span></code>).</p></li>
+</ul>
+<p>All core data retrieval functionalities are designed with robust error handling, utilizing a try/except block that logs critical database failures internally to Sentry before triggering a custom 500 error page.</p>
+</section>
+<section id="core-functionalities-end-user-focus">
+<h2>Core Functionalities (End-User Focus)<a class="headerlink" href="#core-functionalities-end-user-focus" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Viewing Lettings (List Index):</strong>
+* <strong>URL:</strong> <code class="docutils literal notranslate"><span class="pre">/lettings/</span></code>
+* <strong>Description:</strong> Renders the main index page, displaying a list of all available property listings retrieved from the database.
+* <strong>Logging:</strong> Records access attempts at <strong>INFO</strong> level and retrieval success at <strong>DEBUG</strong> level.
+* <strong>Use Case:</strong> A new user browsing the site seeks a quick overview of available properties.</p></li>
+<li><p><strong>Viewing Letting Details:</strong>
+* <strong>URL:</strong> <code class="docutils literal notranslate"><span class="pre">/lettings/&lt;int:letting_id&gt;/</span></code>
+* <strong>Description:</strong> Renders the detail page for a specific rental listing, showing its title and associated address information. If the ID is not found, Django’s <code class="docutils literal notranslate"><span class="pre">get_object_or_404</span></code> returns a 404 error page.
+* <strong>Logging:</strong> Records access attempts at <strong>INFO</strong> level, including the specific ID being queried.</p></li>
+<li><p><strong>Viewing Profiles (List Index):</strong>
+* <strong>URL:</strong> <code class="docutils literal notranslate"><span class="pre">/profiles/</span></code>
+* <strong>Description:</strong> Renders the index page listing all registered user profiles.
+* <strong>Logging:</strong> Records access attempts at <strong>INFO</strong> level.
+* <strong>Use Case:</strong> An administrator verifies the list of currently registered users.</p></li>
+<li><p><strong>Viewing Profile Details:</strong>
+* <strong>URL:</strong> <code class="docutils literal notranslate"><span class="pre">/profiles/&lt;str:username&gt;/</span></code>
+* <strong>Description:</strong> Renders the detail page for a specific user profile, retrieved using the username. If the profile is not found, a 404 error page is displayed.
+* <strong>Logging:</strong> Records access attempts at <strong>INFO</strong> level, including the username being queried.</p></li>
+</ol>
+</section>
+<section id="error-handling-and-monitoring-administrator-focus">
+<h2>Error Handling and Monitoring (Administrator Focus)<a class="headerlink" href="#error-handling-and-monitoring-administrator-focus" title="Link to this heading"></a></h2>
+<p>The application implements custom error handling for better user experience and robust monitoring.</p>
+<ul class="simple">
+<li><p><strong>404 (Not Found):</strong> Handled by <code class="docutils literal notranslate"><span class="pre">custom_404_view</span></code> (mapped by <code class="docutils literal notranslate"><span class="pre">handler404</span></code>). Displays the custom <code class="docutils literal notranslate"><span class="pre">404.html</span></code> template with an HTTP 404 status.</p></li>
+<li><p><strong>500 (Server Error):</strong> Handled by <code class="docutils literal notranslate"><span class="pre">custom_500_view</span></code> (mapped by <code class="docutils literal notranslate"><span class="pre">handler500</span></code>). This view is automatically triggered when a view function raises an unhandled exception (e.g., a critical database failure).</p></li>
+</ul>
+<p><strong>Monitoring Procedure:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Critical Failure Logging:</strong> When a database exception occurs (e.g., in <code class="docutils literal notranslate"><span class="pre">lettings.views.index</span></code>), the exception is logged at the <strong>ERROR</strong> level with <cite>exc_info=True</cite>.</p></li>
+<li><p><strong>Sentry Capture:</strong> Due to the Sentry integration, this critical <strong>ERROR</strong> log event is immediately captured and reported to the Sentry dashboard.</p></li>
+<li><p><strong>Administrator Action:</strong> The administrator should monitor Sentry for exceptions containing the critical log message (e.g., “Critical error retrieving lettings list from DB”) to diagnose infrastructure or data issues instantly.</p></li>
+</ol>
+</section>
+<section id="administration-interface-django-admin">
+<h2>Administration Interface (Django Admin)<a class="headerlink" href="#administration-interface-django-admin" title="Link to this heading"></a></h2>
+<p>The Django Administration interface is the primary tool for managing content and user data.</p>
+<ul class="simple">
+<li><p><strong>URL:</strong> <code class="docutils literal notranslate"><span class="pre">/admin/</span></code></p></li>
+<li><p><strong>Access:</strong> Requires a <strong>superuser</strong> account.</p></li>
+</ul>
+<p><strong>Key Administrative Tasks:</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Lettings Management:</strong></dt><dd><ul>
+<li><p>Create, modify, or delete <strong>Letting</strong> objects.</p></li>
+<li><p>Create, modify, or delete <strong>Address</strong> objects (linked to Lettings).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Profiles Management:</strong></dt><dd><ul>
+<li><p>Manage <strong>Profile</strong> objects, which contain the link to the user’s account.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>User &amp; Group Management:</strong></dt><dd><ul>
+<li><p>Manage default Django <strong>User</strong> accounts (permissions, passwords).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>All custom models are registered in their respective <code class="docutils literal notranslate"><span class="pre">admin.py</span></code> files, ensuring the separation of concerns is maintained even in the administrative back-end.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../deployment/procedures.html" class="btn btn-neutral float-left" title="Deployment and CI/CD Procedures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_reference.html" class="btn btn-neutral float-right" title="API Reference (Autodoc)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mathieu P..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

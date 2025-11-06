@@ -1,0 +1,32 @@
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+# Required
+version: 2
+
+# Set the OS, Python version, and other tools you might need
+build:
+  # Use a recent Ubuntu version
+  os: ubuntu-24.04
+  tools:
+    # Match a stable Python version, e.g., 3.12, to your project (which uses 3.12.3)
+    python: "3.12"
+  
+# Install necessary dependencies to build the documentation
+# This includes all packages needed by Sphinx, the theme, and the project itself for autodoc.
+python:
+  install:
+    # 1. Install all dependencies from the global requirements.txt file (at the project root)
+    - requirements: requirements.txt
+    
+    # 2. Install the project itself (oc_lettings_site) using the current directory (path: .)
+    # This is essential for Sphinx Autodoc to find modules like lettings.models and profiles.models.
+    - method: pip
+      path: .
+
+# Build documentation in the 'doc' folder using Sphinx
+sphinx:
+  configuration: doc/conf.py
+
+# Specify the version of the documentation format
+formats: all

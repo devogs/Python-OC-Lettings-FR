@@ -1,0 +1,157 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start Guide &mdash; Devogs-OC-lettings-FR 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Deployment and CI/CD Procedures" href="../deployment/procedures.html" />
+    <link rel="prev" title="Installation Instructions" href="prerequisites.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Devogs-OC-lettings-FR
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../architecture/project_description.html">Project Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/technologies.html">Technologies and Programming Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/data_models.html">Database Structure and Data Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Installation Instructions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#launching-the-application">Launching the Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-data-integrity">Testing Data Integrity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-tests">Running Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/procedures.html">Deployment and CI/CD Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/guide.html">Usage Guide and Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/api_reference.html">API Reference (Autodoc)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Devogs-OC-lettings-FR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/installation/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start-guide">
+<h1>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Link to this heading"></a></h1>
+<p>This guide provides the fastest way to get the application running and testing core features.</p>
+<section id="launching-the-application">
+<h2>Launching the Application<a class="headerlink" href="#launching-the-application" title="Link to this heading"></a></h2>
+<p>Assuming you have cloned the repository and have Docker installed:</p>
+<ol class="arabic">
+<li><p>Execute the local run script from the project root:
+.. code-block:: bash</p>
+<blockquote>
+<div><p>sudo docker compose up -d</p>
+</div></blockquote>
+</li>
+<li><p>Wait for the logs to show “Container python-oc-lettings-fr-web-1  Started”.</p></li>
+<li><p>Open the application’s root index: <cite>http://localhost:8000</cite></p></li>
+</ol>
+</section>
+<section id="testing-data-integrity">
+<h2>Testing Data Integrity<a class="headerlink" href="#testing-data-integrity" title="Link to this heading"></a></h2>
+<p>To verify that the modularization and data migration were successful, navigate to the listing indices:</p>
+<ul class="simple">
+<li><p><strong>Lettings Index:</strong> <cite>http://localhost:8000/lettings</cite></p></li>
+<li><p><strong>Profiles Index:</strong> <cite>http://localhost:8000/profiles</cite></p></li>
+</ul>
+<p>You should see all original listings and profiles correctly associated via the foreign key relationships.</p>
+</section>
+<section id="running-tests">
+<h2>Running Tests<a class="headerlink" href="#running-tests" title="Link to this heading"></a></h2>
+<p>To ensure all functionalities and migrations are stable:</p>
+<ol class="arabic">
+<li><p>Run the Pytest command
+.. code-block:: bash</p>
+<blockquote>
+<div><p>pytest</p>
+</div></blockquote>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="prerequisites.html" class="btn btn-neutral float-left" title="Installation Instructions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../deployment/procedures.html" class="btn btn-neutral float-right" title="Deployment and CI/CD Procedures" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mathieu P..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
